@@ -1,17 +1,13 @@
 # sssd
 
-Welcome to your new module. A short overview of the generated parts can be found
-in the [PDK documentation][1].
+Why this SSSD module, when there are so many others on the forge?
 
-The README template below provides a starting point with details about what
-information to include in your README.
+This is a minimalist SSSD module that supports incrementally building the config (via `/etc/sssd/conf.d`) or setting it all at once.
 
 ## Table of Contents
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with sssd](#setup)
-    * [What sssd affects](#what-sssd-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with sssd](#beginning-with-sssd)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -19,99 +15,152 @@ information to include in your README.
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your
-module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module
-is what they want.
+Manage the SSD package, config, and services.  You can manage some or all of these elements.  Additionally you can build the SSSD config incrementally via either the `$configs` parameter or by calling the `sssd::config` defined type yourself.
 
 ## Setup
 
-### What sssd affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
-
-If there's more that they should know about, though, this is the place to
-mention:
-
-* Files, packages, services, or operations that the module will alter, impact,
-  or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section here.
-
 ### Beginning with sssd
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most basic
-use of the module.
+Simply including the class is enough to get the packages and services.  If you want any running authentication domains, you'll need to add those.  Examples are included in the **Usage** section.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your
-users how to use your module to solve problems, and be sure to include code
-examples. Include three to five examples of the most important or common tasks a
-user can accomplish with your module. Show users how to accomplish more complex
-tasks that involve different types, classes, and functions working in tandem.
+The two parameters you probably care most about are `$main_config` and `$configs`.
 
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as
-Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your
-module. For details on how to add code comments and generate documentation with
-Strings, see the [Puppet Strings documentation][2] and [style guide][3].
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the
-root of your module directory and list out each of your module's classes,
-defined types, facts, functions, Puppet tasks, task plans, and resource types
-and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-* The data type, if applicable.
-* A description of what the element does.
-* Valid values, if the data type doesn't make it obvious.
-* Default value, if any.
-
-For example:
-
+The key thing to remember is if a `domain` is not listed within
+```ini
+[sssd]
+domains=XXXXXXXXXXX
 ```
-### `pet::cat`
+It will not be consulted.  So when dropping in overrides make sure to set the domain as you want it.
 
-#### Parameters
+NOTE: `sssd` does not merge the config elements.  An override from inside `/etc/sssd/conf.d/*.conf` will **REPLACE** the entry defined earlier.  If you are defining domains somewhat dynamically, you'll need to get that sorted out.
 
-##### `meow`
+### main\_config
 
-Enables vocalization in your cat. Valid options: 'string'.
+This is a hash that gets mapped directly into `/etc/sssd/sssd.conf` (or your `$main_config_file`)
 
-Default: 'medium-loud'.
+The "value" entries can be either a `String` or an `Array`.  In the case of an `Array`, the content will be automatically joined with a ', ' in your config file.  This should let you merge and knockout elements as needed and possibly have cleaner looking formatting.
+
+```puppet
+class { 'sssd':
+  main_config => {
+    sssd => {
+      'setting' => ['value', 'a']
+    },
+    pam => {
+      'setting' => 'value, a'
+    },
+    nss => {
+      'setting' => 'value'
+    },
+    sudo => {
+      'setting' => 'value'
+    },
+    domain/a => {
+      'setting' => 'value'
+    },
+    domain/b => {
+      'setting' => 'value'
+    },
+  }
+}
+```
+or in hiera
+```yaml
+sssd::main_config:
+  sssd:
+    setting:
+      - value
+      - a
+  pam:
+    setting: 'value, a'
+  nss:
+    setting: value
+  sudo:
+    setting: value
+  'domain/a':
+    setting:value
+  'domain/b':
+    setting:value
+```
+
+These will produce
+```ini
+[sssd]
+setting=value, a
+[pam]
+setting=value, a
+[nss]
+setting=value
+[sudo]
+setting=value
+[domain/a]
+setting=value
+[domain/b]
+setting=value
+```
+
+### configs
+
+Items in the `$configs` hash are passed directly into the `sssd::config` defined type.
+
+Their structure is basically the same as `main_config`, but with one extra layer of nesting.
+
+```yaml
+sssd::main_config:
+  sssd:
+    setting:
+      - value
+      - a
+  pam:
+    setting: 'value, a'
+sssd::configs:
+  'override sssd':
+    filename: example.conf
+    stanzas:
+      sssd:
+        setting:
+          - value
+          - b
+  override_pam:
+    stanzas:
+      pam:
+        debug: 0
+```
+
+This will produce the `$main_config` in `/etc/sssd/sssd.conf` and extra configs in `/etc/sssd/conf.d` containing the stanzas defined under each title.
+
+```ini
+# /etc/sssd/sssd.conf
+[sssd]
+setting=value, a
+[pam]
+setting=value, a
+```
+
+```ini
+#/etc/sssd/conf.d/example.conf
+[sssd]
+setting:value, b
+```
+
+```ini
+#/etc/sssd/conf.d/50-pam.conf
+[pam]
+debug=0
 ```
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other
-warnings.
+This module specifically does not manipulate files or services
+that do not belong to sssd.  There are other modules on the forge
+that can configure pam/[authselect](https://forge.puppet.com/modules/jcpunk/authselect)
+and oddjob/`login.defs`.
+
+If you want to manipulate the sssd startup units, I'd recommend the
+`systemd::dropin` features from [puppet-systemd](https://forge.puppet.com/modules/puppet/systemd)
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing
-to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel are
-necessary or important to include here. Please use the `##` header.
-
-[1]: https://puppet.com/docs/pdk/latest/pdk_generating_modules.html
-[2]: https://puppet.com/docs/puppet/latest/puppet_strings.html
-[3]: https://puppet.com/docs/puppet/latest/puppet_strings_style.html
+Hop on over to the git repo listed in `metadata.json`

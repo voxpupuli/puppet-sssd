@@ -1,0 +1,37 @@
+<%- |
+  Hash[String, Variant[Hash, Undef]] $stanzas = {}
+| -%>
+#
+# This file managed by Puppet - DO NOT EDIT
+#
+<%# float any `sssd` sections to the top  -%>
+<% if 'sssd' in $stanzas {-%>
+
+[sssd]
+<% $stanzas['sssd'].keys.sort.each | $key | { -%>
+<% if $stanzas['sssd'][$key] != undef { -%>
+<%= type($stanzas['sssd'][$key], 'generalized') %>
+<% if $stanzas['sssd'][$key] =~ Array { -%>
+<%= $key %>=<%= $stanzas['sssd'][$key].join(', ') %>
+<% } else {-%>
+<%= $key %>=<%= $stanzas['sssd'][$key] %>
+<% } -%>
+<% } -%>
+<% } -%>
+<% } -%>
+<%# any non-`sssd` sections are sorted below  -%>
+<% $stanzas.keys.sort.each | $section | { -%>
+<% if $section != 'sssd' { -%>
+
+[<%= $section %>]
+<% $stanzas[$section].keys.sort.each | $key | { -%>
+<% if $stanzas[$section][$key] != undef { -%>
+<% if $stanzas[$section][$key] =~ Array { -%>
+<%= $key %>=<%= $stanzas[$section][$key].join(', ') %>
+<% } else {-%>
+<%= $key %>=<%= $stanzas[$section][$key] %>
+<% } -%>
+<% } -%>
+<% } -%>
+<% } -%>
+<% } -%>

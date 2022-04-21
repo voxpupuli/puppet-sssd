@@ -2,9 +2,11 @@
   "name": "jcpunk-sssd",
   "version": "0.1.0",
   "author": "Pat Riehecky",
-  "summary": "",
+  "summary": "manage sssd",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/jcpunk/puppet-sssd",
+  "project_page": "https://github.com/jcpunk/puppet-sssd",
+  "issues_url": "https://github.com/jcpunk/puppet-sssd/issues",
   "dependencies": [
 
   ],

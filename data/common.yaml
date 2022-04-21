@@ -1,1 +1,23 @@
---- {}
+---
+sssd::packages_manage: true
+sssd::packages_ensure: installed
+sssd::package_names:
+  - sssd
+
+sssd::config_manage: true
+sssd::main_config_file: /etc/sssd/sssd.conf
+sssd::config_d_location: /etc/sssd/conf.d
+sssd::purge_unmanaged_conf_d: true
+sssd::config_owner: root
+sssd::config_group: root
+sssd::config_mode: '0600'
+sssd::main_config:
+  sssd: {}
+sssd::configs: {}
+
+sssd::services_manage: true
+sssd::services_ensure: running
+sssd::services_enable: true
+sssd::service_names:
+  - sssd.service
+...
