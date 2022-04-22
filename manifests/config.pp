@@ -28,7 +28,7 @@
 #
 # @example
 #   sssd::config { 'main conf':
-#     content             => {
+#     stanzas             => {
 #       'sssd'            => {
 #         'domains'       => [ 'example.com', 'otherdomain.tld']
 #         'services       => ['pam', 'nss', 'sudo']
@@ -42,7 +42,7 @@
 #   }
 #
 #  sssd:config {'LDAP':
-#    content              => {
+#    stanzas              => {
 #      'domain/LDAP'      => 
 #         'id_provider'   => 'ldap'
 #      }
