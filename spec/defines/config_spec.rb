@@ -29,7 +29,8 @@ describe 'sssd::config' do
                     'domains' => ['c', 'a', 'b'],
                     'services' => 'pam, nss',
                   },
-                'pam' => {},
+                'pam' => { 'pam_gssapi_services' => 'sudo, sudo-i' },
+                'nss' => { 'pwfield' => '*' },
                 'domain/a' => {},
               },
           }
@@ -38,7 +39,7 @@ describe 'sssd::config' do
         # it { pp catalogue.resources }
         it { is_expected.to compile }
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d/50-domain_a_pam_sssd.conf')
+          is_expected.to contain_file('/etc/sssd/conf.d/50-domain_a_nss_pam_sssd.conf')
             .with_ensure('file')
             .with_owner('root')
             .with_group('root')
@@ -47,7 +48,10 @@ describe 'sssd::config' do
             .with_content(%r{^\[sssd\]$})
             .with_content(%r{^domains=c, a, b$})
             .with_content(%r{^services=pam, nss$})
+            .with_content(%r{^\[nss\]$})
+            .with_content(%r{^pwfield=\*$})
             .with_content(%r{^\[pam\]$})
+            .with_content(%r{^pam_gssapi_services=sudo, sudo-i$})
             .with_content(%r{^\[domain/a\]$})
         }
       end

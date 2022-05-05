@@ -10,7 +10,6 @@
 [sssd]
 <% $stanzas['sssd'].keys.sort.each | $key | { -%>
 <% if $stanzas['sssd'][$key] != undef { -%>
-<%= type($stanzas['sssd'][$key], 'generalized') %>
 <% if $stanzas['sssd'][$key] =~ Array { -%>
 <%= $key %>=<%= $stanzas['sssd'][$key].join(', ') %>
 <% } else {-%>
