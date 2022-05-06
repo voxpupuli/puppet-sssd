@@ -10,7 +10,7 @@
 #   Array of packages to manage
 class sssd::install (
   # lint:ignore:parameter_types
-  $packages_manage  = $sssd::packages_manage,
+  $packages_manage = $sssd::packages_manage,
   $packages_ensure = $sssd::packages_ensure,
   $package_names   = $sssd::package_names,
   # lint:endignore

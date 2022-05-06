@@ -161,6 +161,8 @@ and oddjob/`login.defs`.
 If you want to manipulate the sssd startup units, I'd recommend the
 `systemd::dropin` features from [puppet-systemd](https://forge.puppet.com/modules/puppet/systemd)
 
+SSSD makes use of `inotify` to watch some files.  The `inotify` appears to run with all permissions dropped, so non-world accessible files cannot be watched.
+
 ## Development
 
 Hop on over to the git repo listed in `metadata.json`
