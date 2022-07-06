@@ -9,6 +9,8 @@ describe 'sssd::base_config' do
 
       describe 'with defaults' do
         it { is_expected.to compile }
+        it { is_expected.to contain_file('/etc/sssd') }
+        it { is_expected.to contain_file('/etc/sssd/pki') }
         it { is_expected.to contain_file('/etc/sssd/conf.d') }
         it { is_expected.to contain_sssd__config('/etc/sssd/sssd.conf') }
       end
@@ -29,9 +31,14 @@ describe 'sssd::base_config' do
         let(:params) do
           {
             'config_manage' => true,
+            'main_config_dir' => '/tmp',
+            'main_pki_dir' => '/tmp/pki',
             'main_config_file' => '/tmp/test.conf',
             'config_d_location' => '/tmp/example',
             'purge_unmanaged_conf_d' => true,
+            'pki_owner' => 'pki',
+            'pki_group' => 'pki',
+            'pki_mode' => '0711',
             'config_owner' => 'sssd',
             'config_group' => 'sssd',
             'config_mode' => '0755',
@@ -40,8 +47,20 @@ describe 'sssd::base_config' do
         end
 
         it { is_expected.to compile }
-        it { is_expected.to have_file_resource_count(2) }
+        it { is_expected.to have_file_resource_count(4) }
         it { is_expected.to have_sssd__config_resource_count(1) }
+        it {
+          is_expected.to contain_file('/tmp')
+            .with_owner('sssd')
+            .with_group('sssd')
+            .with_mode('0755')
+        }
+        it {
+          is_expected.to contain_file('/tmp/pki')
+            .with_owner('pki')
+            .with_group('pki')
+            .with_mode('0711')
+        }
         it {
           is_expected.to contain_file('/tmp/example/')
             .with_owner('sssd')
@@ -68,7 +87,7 @@ describe 'sssd::base_config' do
         end
 
         it { is_expected.to compile }
-        it { is_expected.to have_file_resource_count(2) }
+        it { is_expected.to have_file_resource_count(4) }
         it { is_expected.to have_sssd__config_resource_count(1) }
         it {
           is_expected.to contain_file('/etc/sssd/conf.d/')

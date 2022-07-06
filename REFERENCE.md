@@ -56,9 +56,14 @@ The following parameters are available in the `sssd` class:
 * [`packages_ensure`](#packages_ensure)
 * [`package_names`](#package_names)
 * [`config_manage`](#config_manage)
+* [`main_pki_dir`](#main_pki_dir)
+* [`main_config_dir`](#main_config_dir)
 * [`main_config_file`](#main_config_file)
 * [`config_d_location`](#config_d_location)
 * [`purge_unmanaged_conf_d`](#purge_unmanaged_conf_d)
+* [`pki_owner`](#pki_owner)
+* [`pki_group`](#pki_group)
+* [`pki_mode`](#pki_mode)
 * [`config_owner`](#config_owner)
 * [`config_group`](#config_group)
 * [`config_mode`](#config_mode)
@@ -93,6 +98,18 @@ Data type: `Boolean`
 
 Should we manage the config?
 
+##### <a name="main_pki_dir"></a>`main_pki_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+This is probably /etc/sssd/pki on your system
+
+##### <a name="main_config_dir"></a>`main_config_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+This is probably /etc/sssd on your system
+
 ##### <a name="main_config_file"></a>`main_config_file`
 
 Data type: `Stdlib::Absolutepath`
@@ -111,17 +128,35 @@ Data type: `Boolean`
 
 Should we remove any files unknown to puppet in the conf_d location?
 
+##### <a name="pki_owner"></a>`pki_owner`
+
+Data type: `String`
+
+Owner for the pki directory - should probably be 'root' or 'sssd'
+
+##### <a name="pki_group"></a>`pki_group`
+
+Data type: `String`
+
+Group for the pki directory - should probably be 'root' or 'sssd'
+
+##### <a name="pki_mode"></a>`pki_mode`
+
+Data type: `String`
+
+Group for the pki directory - should probably be '0711'
+
 ##### <a name="config_owner"></a>`config_owner`
 
 Data type: `String`
 
-Owner for the config files - should be 'root'
+Owner for the config files - should probably be 'root' or 'sssd'
 
 ##### <a name="config_group"></a>`config_group`
 
 Data type: `String`
 
-Group for the config files - should be 'root'
+Group for the config files - should probably be 'root' or 'sssd'
 
 ##### <a name="config_mode"></a>`config_mode`
 
@@ -182,7 +217,7 @@ will be joined with ', ' which should let you
 set things in a number of useful ways.
 
  sssd:config {'LDAP':
-   content              => {
+   stanzas              => {
      'domain/LDAP'      =>
         'id_provider'   => 'ldap'
      }
@@ -194,7 +229,7 @@ set things in a number of useful ways.
 
 ```puppet
 sssd::config { 'main conf':
-  content             => {
+  stanzas             => {
     'sssd'            => {
       'domains'       => [ 'example.com', 'otherdomain.tld']
       'services       => ['pam', 'nss', 'sudo']

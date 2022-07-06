@@ -4,6 +4,8 @@
 #
 # @param config_manage
 #   Should we manage the config?
+# @param main_config_dir
+#   This is probably /etc/sssd on your system
 # @param main_config_file
 #   This is probably /etc/sssd/sssd.conf on your system
 # @param config_d_location
@@ -28,9 +30,14 @@
 class sssd::base_config (
   # lint:ignore:parameter_types
   $config_manage  = $sssd::config_manage,
+  $main_config_dir = $sssd::main_config_dir,
   $main_config_file = $sssd::main_config_file,
+  $main_pki_dir = $sssd::main_pki_dir,
   $config_d_location = $sssd::config_d_location,
   $purge_unmanaged_conf_d = $sssd::purge_unmanaged_conf_d,
+  $pki_owner = $sssd::pki_owner,
+  $pki_group = $sssd::pki_group,
+  $pki_mode = $sssd::pki_mode,
   $config_owner = $sssd::config_owner,
   $config_group = $sssd::config_group,
   $config_mode = $sssd::config_mode,
@@ -41,6 +48,20 @@ class sssd::base_config (
   assert_private()
 
   if $config_manage {
+    file { $main_config_dir:
+      ensure => 'directory',
+      owner  => $config_owner,
+      group  => $config_group,
+      mode   => $config_mode,
+    }
+
+    file { $main_pki_dir:
+      ensure => 'directory',
+      owner  => $pki_owner,
+      group  => $pki_group,
+      mode   => $pki_mode,
+    }
+
     file { $config_d_location:
       ensure  => 'directory',
       owner   => $config_owner,

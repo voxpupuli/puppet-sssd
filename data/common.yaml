@@ -5,9 +5,14 @@ sssd::package_names:
   - sssd
 
 sssd::config_manage: true
+sssd::main_config_dir: /etc/sssd
+sssd::main_pki_dir: /etc/sssd/pki
 sssd::main_config_file: /etc/sssd/sssd.conf
 sssd::config_d_location: /etc/sssd/conf.d
 sssd::purge_unmanaged_conf_d: true
+sssd::pki_owner: root
+sssd::pki_group: root
+sssd::pki_mode: '0711'
 sssd::config_owner: root
 sssd::config_group: root
 sssd::config_mode: '0600'
