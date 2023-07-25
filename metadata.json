@@ -1,12 +1,12 @@
 {
-  "name": "jcpunk-sssd",
+  "name": "puppet-sssd",
   "version": "0.1.2",
-  "author": "Pat Riehecky",
+  "author": "Vox Pupuli",
   "summary": "Manage sssd at once or incrementally",
   "license": "Apache-2.0",
-  "source": "https://github.com/jcpunk/puppet-sssd",
-  "project_page": "https://github.com/jcpunk/puppet-sssd",
-  "issues_url": "https://github.com/jcpunk/puppet-sssd/issues",
+  "source": "https://github.com/voxpupuli/puppet-sssd",
+  "project_page": "https://github.com/voxpupuli/puppet-sssd",
+  "issues_url": "https://github.com/jcpunk/voxpupuli-sssd/issues",
   "dependencies": [
 
   ],
