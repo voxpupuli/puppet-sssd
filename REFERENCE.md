@@ -18,7 +18,7 @@
 
 ### Defined types
 
-* [`sssd::config`](#sssdconfig): Write out an SSSD compatible config file
+* [`sssd::config`](#sssd--config): Write out an SSSD compatible config file
 
 ## Classes
 
@@ -52,119 +52,119 @@ class { 'sssd':
 
 The following parameters are available in the `sssd` class:
 
-* [`packages_manage`](#packages_manage)
-* [`packages_ensure`](#packages_ensure)
-* [`package_names`](#package_names)
-* [`config_manage`](#config_manage)
-* [`main_pki_dir`](#main_pki_dir)
-* [`main_config_dir`](#main_config_dir)
-* [`main_config_file`](#main_config_file)
-* [`config_d_location`](#config_d_location)
-* [`purge_unmanaged_conf_d`](#purge_unmanaged_conf_d)
-* [`pki_owner`](#pki_owner)
-* [`pki_group`](#pki_group)
-* [`pki_mode`](#pki_mode)
-* [`config_owner`](#config_owner)
-* [`config_group`](#config_group)
-* [`config_mode`](#config_mode)
-* [`main_config`](#main_config)
-* [`configs`](#configs)
-* [`services_manage`](#services_manage)
-* [`services_ensure`](#services_ensure)
-* [`services_enable`](#services_enable)
-* [`service_names`](#service_names)
+* [`packages_manage`](#-sssd--packages_manage)
+* [`packages_ensure`](#-sssd--packages_ensure)
+* [`package_names`](#-sssd--package_names)
+* [`config_manage`](#-sssd--config_manage)
+* [`main_pki_dir`](#-sssd--main_pki_dir)
+* [`main_config_dir`](#-sssd--main_config_dir)
+* [`main_config_file`](#-sssd--main_config_file)
+* [`config_d_location`](#-sssd--config_d_location)
+* [`purge_unmanaged_conf_d`](#-sssd--purge_unmanaged_conf_d)
+* [`pki_owner`](#-sssd--pki_owner)
+* [`pki_group`](#-sssd--pki_group)
+* [`pki_mode`](#-sssd--pki_mode)
+* [`config_owner`](#-sssd--config_owner)
+* [`config_group`](#-sssd--config_group)
+* [`config_mode`](#-sssd--config_mode)
+* [`main_config`](#-sssd--main_config)
+* [`configs`](#-sssd--configs)
+* [`services_manage`](#-sssd--services_manage)
+* [`services_ensure`](#-sssd--services_ensure)
+* [`services_enable`](#-sssd--services_enable)
+* [`service_names`](#-sssd--service_names)
 
-##### <a name="packages_manage"></a>`packages_manage`
+##### <a name="-sssd--packages_manage"></a>`packages_manage`
 
 Data type: `Boolean`
 
 Should we manage the package?
 
-##### <a name="packages_ensure"></a>`packages_ensure`
+##### <a name="-sssd--packages_ensure"></a>`packages_ensure`
 
 Data type: `String[1]`
 
 `package` ensure parameter
 
-##### <a name="package_names"></a>`package_names`
+##### <a name="-sssd--package_names"></a>`package_names`
 
 Data type: `Array[String]`
 
 Array of packages to manage
 
-##### <a name="config_manage"></a>`config_manage`
+##### <a name="-sssd--config_manage"></a>`config_manage`
 
 Data type: `Boolean`
 
 Should we manage the config?
 
-##### <a name="main_pki_dir"></a>`main_pki_dir`
+##### <a name="-sssd--main_pki_dir"></a>`main_pki_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/pki on your system
 
-##### <a name="main_config_dir"></a>`main_config_dir`
+##### <a name="-sssd--main_config_dir"></a>`main_config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd on your system
 
-##### <a name="main_config_file"></a>`main_config_file`
+##### <a name="-sssd--main_config_file"></a>`main_config_file`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/sssd.conf on your system
 
-##### <a name="config_d_location"></a>`config_d_location`
+##### <a name="-sssd--config_d_location"></a>`config_d_location`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/conf.d on your system
 
-##### <a name="purge_unmanaged_conf_d"></a>`purge_unmanaged_conf_d`
+##### <a name="-sssd--purge_unmanaged_conf_d"></a>`purge_unmanaged_conf_d`
 
 Data type: `Boolean`
 
 Should we remove any files unknown to puppet in the conf_d location?
 
-##### <a name="pki_owner"></a>`pki_owner`
+##### <a name="-sssd--pki_owner"></a>`pki_owner`
 
 Data type: `String`
 
 Owner for the pki directory - should probably be 'root' or 'sssd'
 
-##### <a name="pki_group"></a>`pki_group`
+##### <a name="-sssd--pki_group"></a>`pki_group`
 
 Data type: `String`
 
 Group for the pki directory - should probably be 'root' or 'sssd'
 
-##### <a name="pki_mode"></a>`pki_mode`
+##### <a name="-sssd--pki_mode"></a>`pki_mode`
 
 Data type: `String`
 
 Group for the pki directory - should probably be '0711'
 
-##### <a name="config_owner"></a>`config_owner`
+##### <a name="-sssd--config_owner"></a>`config_owner`
 
 Data type: `String`
 
 Owner for the config files - should probably be 'root' or 'sssd'
 
-##### <a name="config_group"></a>`config_group`
+##### <a name="-sssd--config_group"></a>`config_group`
 
 Data type: `String`
 
 Group for the config files - should probably be 'root' or 'sssd'
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-sssd--config_mode"></a>`config_mode`
 
 Data type: `String`
 
 chmod for the config files - should be '0600'
 
-##### <a name="main_config"></a>`main_config`
+##### <a name="-sssd--main_config"></a>`main_config`
 
 Data type: `Hash`
 
@@ -172,7 +172,7 @@ Hash containing the content of $main_config_file broken out by section
 Entries in $config_d_location can replace these elements in a last
 file wins methodology.
 
-##### <a name="configs"></a>`configs`
+##### <a name="-sssd--configs"></a>`configs`
 
 Data type: `Hash`
 
@@ -181,25 +181,25 @@ A Hash similar to $main_config, but with one more level of nesting
   section:
     key: value
 
-##### <a name="services_manage"></a>`services_manage`
+##### <a name="-sssd--services_manage"></a>`services_manage`
 
 Data type: `Boolean`
 
 Should this class manage the service states
 
-##### <a name="services_ensure"></a>`services_ensure`
+##### <a name="-sssd--services_ensure"></a>`services_ensure`
 
 Data type: `Enum['stopped','running']`
 
 Service ensure parameter
 
-##### <a name="services_enable"></a>`services_enable`
+##### <a name="-sssd--services_enable"></a>`services_enable`
 
 Data type: `Boolean`
 
 Service enable parameter
 
-##### <a name="service_names"></a>`service_names`
+##### <a name="-sssd--service_names"></a>`service_names`
 
 Data type: `Array[String]`
 
@@ -207,7 +207,7 @@ Array of services that are part of sssd
 
 ## Defined types
 
-### <a name="sssdconfig"></a>`sssd::config`
+### <a name="sssd--config"></a>`sssd::config`
 
 Transform a Hash of settings into a deterministic
 sssd compatible config file.
@@ -247,23 +247,23 @@ sssd::config { 'main conf':
 
 The following parameters are available in the `sssd::config` defined type:
 
-* [`stanzas`](#stanzas)
-* [`owner`](#owner)
-* [`group`](#group)
-* [`mode`](#mode)
-* [`order`](#order)
-* [`config_d_location`](#config_d_location)
-* [`filename`](#filename)
-* [`force_this_filename`](#force_this_filename)
+* [`stanzas`](#-sssd--config--stanzas)
+* [`owner`](#-sssd--config--owner)
+* [`group`](#-sssd--config--group)
+* [`mode`](#-sssd--config--mode)
+* [`order`](#-sssd--config--order)
+* [`config_d_location`](#-sssd--config--config_d_location)
+* [`filename`](#-sssd--config--filename)
+* [`force_this_filename`](#-sssd--config--force_this_filename)
 
-##### <a name="stanzas"></a>`stanzas`
+##### <a name="-sssd--config--stanzas"></a>`stanzas`
 
 Data type: `Hash`
 
 A hash of stanzas with key/value pairs
 of their entries
 
-##### <a name="owner"></a>`owner`
+##### <a name="-sssd--config--owner"></a>`owner`
 
 Data type: `String`
 
@@ -271,7 +271,7 @@ Who should own
 
 Default value: `'root'`
 
-##### <a name="group"></a>`group`
+##### <a name="-sssd--config--group"></a>`group`
 
 Data type: `String`
 
@@ -279,7 +279,7 @@ Who should own
 
 Default value: `'root'`
 
-##### <a name="mode"></a>`mode`
+##### <a name="-sssd--config--mode"></a>`mode`
 
 Data type: `String`
 
@@ -287,7 +287,7 @@ permissions
 
 Default value: `'0600'`
 
-##### <a name="order"></a>`order`
+##### <a name="-sssd--config--order"></a>`order`
 
 Data type: `Integer[0, 99]`
 
@@ -295,7 +295,7 @@ prefix used to get these files in the order you want
 
 Default value: `50`
 
-##### <a name="config_d_location"></a>`config_d_location`
+##### <a name="-sssd--config--config_d_location"></a>`config_d_location`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -303,20 +303,20 @@ This is probably /etc/sssd/conf.d on your system
 
 Default value: `'/etc/sssd/conf.d'`
 
-##### <a name="filename"></a>`filename`
+##### <a name="-sssd--config--filename"></a>`filename`
 
 Data type: `Optional[Pattern[/\.conf$/]]`
 
 Name of the config file to write out into $config_d_location.
 The filename must end in `.conf` or sssd will not see it.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="force_this_filename"></a>`force_this_filename`
+##### <a name="-sssd--config--force_this_filename"></a>`force_this_filename`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Ignore the helper logic, write out this file
 
-Default value: ``undef``
+Default value: `undef`
 
