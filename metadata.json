@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "source": "https://github.com/voxpupuli/puppet-sssd",
   "project_page": "https://github.com/voxpupuli/puppet-sssd",
-  "issues_url": "https://github.com/jcpunk/voxpupuli-sssd/issues",
+  "issues_url": "https://github.com/voxpupuli/puppet-sssd/issues",
   "dependencies": [
 
   ],
