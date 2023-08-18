@@ -29,7 +29,7 @@ describe 'sssd::install' do
           {
             'packages_manage' => true,
             'packages_ensure' => 'present',
-            'package_names' => [ 'a', 'b' ],
+            'package_names' => %w[a b],
           }
         end
 
@@ -44,7 +44,7 @@ describe 'sssd::install' do
           {
             'packages_manage' => true,
             'packages_ensure' => 'latest',
-            'package_names' => [ 'a' ],
+            'package_names' => ['a'],
           }
         end
 
