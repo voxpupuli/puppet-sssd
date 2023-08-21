@@ -10,10 +10,11 @@ describe 'sssd::service' do
       describe 'with defaults' do
         it { is_expected.to compile }
         it { is_expected.to have_service_resource_count(1) }
+
         it {
-          is_expected.to contain_service('sssd.service')
-            .with_ensure('running')
-            .with_enable(true)
+          is_expected.to contain_service('sssd.service').
+            with_ensure('running').
+            with_enable(true)
         }
       end
 
@@ -34,21 +35,23 @@ describe 'sssd::service' do
             'services_manage' => true,
             'services_enable' => false,
             'services_ensure' => 'stopped',
-            'service_names' => [ 'a', 'b']
+            'service_names' => %w[a b]
           }
         end
 
         it { is_expected.to compile }
         it { is_expected.to have_service_resource_count(2) }
+
         it {
-          is_expected.to contain_service('a')
-            .with_ensure('stopped')
-            .with_enable(false)
+          is_expected.to contain_service('a').
+            with_ensure('stopped').
+            with_enable(false)
         }
+
         it {
-          is_expected.to contain_service('b')
-            .with_ensure('stopped')
-            .with_enable(false)
+          is_expected.to contain_service('b').
+            with_ensure('stopped').
+            with_enable(false)
         }
       end
     end

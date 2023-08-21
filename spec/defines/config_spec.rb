@@ -26,7 +26,7 @@ describe 'sssd::config' do
               {
                 'sssd' =>
                   {
-                    'domains' => ['c', 'a', 'b'],
+                    'domains' => %w[c a b],
                     'services' => 'pam, nss',
                   },
                 'pam' => { 'pam_gssapi_services' => 'sudo, sudo-i' },
@@ -38,21 +38,22 @@ describe 'sssd::config' do
 
         # it { pp catalogue.resources }
         it { is_expected.to compile }
+
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d/50-domain_a_nss_pam_sssd.conf')
-            .with_ensure('file')
-            .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
-            .with_notify('Class[Sssd::Service]')
-            .with_content(%r{^\[sssd\]$})
-            .with_content(%r{^domains=c, a, b$})
-            .with_content(%r{^services=pam, nss$})
-            .with_content(%r{^\[nss\]$})
-            .with_content(%r{^pwfield=\*$})
-            .with_content(%r{^\[pam\]$})
-            .with_content(%r{^pam_gssapi_services=sudo, sudo-i$})
-            .with_content(%r{^\[domain/a\]$})
+          is_expected.to contain_file('/etc/sssd/conf.d/50-domain_a_nss_pam_sssd.conf').
+            with_ensure('file').
+            with_owner('root').
+            with_group('root').
+            with_mode('0600').
+            with_notify('Class[Sssd::Service]').
+            with_content(%r{^\[sssd\]$}).
+            with_content(%r{^domains=c, a, b$}).
+            with_content(%r{^services=pam, nss$}).
+            with_content(%r{^\[nss\]$}).
+            with_content(%r{^pwfield=\*$}).
+            with_content(%r{^\[pam\]$}).
+            with_content(%r{^pam_gssapi_services=sudo, sudo-i$}).
+            with_content(%r{^\[domain/a\]$})
         }
       end
 
@@ -68,7 +69,7 @@ describe 'sssd::config' do
               {
                 'sssd' =>
                   {
-                    'domains' => ['c', 'a', 'b'],
+                    'domains' => %w[c a b],
                     'services' => 'pam, nss',
                   },
                 'pam' => {},
@@ -77,17 +78,18 @@ describe 'sssd::config' do
         end
 
         it { is_expected.to compile }
+
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d/20-pam_sssd.conf')
-            .with_ensure('file')
-            .with_owner('sssd')
-            .with_group('sssd')
-            .with_mode('0644')
-            .with_notify('Class[Sssd::Service]')
-            .with_content(%r{^\[sssd\]$})
-            .with_content(%r{^domains=c, a, b$})
-            .with_content(%r{^services=pam, nss$})
-            .with_content(%r{^\[pam\]$})
+          is_expected.to contain_file('/etc/sssd/conf.d/20-pam_sssd.conf').
+            with_ensure('file').
+            with_owner('sssd').
+            with_group('sssd').
+            with_mode('0644').
+            with_notify('Class[Sssd::Service]').
+            with_content(%r{^\[sssd\]$}).
+            with_content(%r{^domains=c, a, b$}).
+            with_content(%r{^services=pam, nss$}).
+            with_content(%r{^\[pam\]$})
         }
       end
 
@@ -100,7 +102,7 @@ describe 'sssd::config' do
               {
                 'sssd' =>
                   {
-                    'domains' => ['c', 'a', 'b'],
+                    'domains' => %w[c a b],
                     'services' => 'pam, nss',
                   },
                 'pam' => {},
@@ -109,17 +111,18 @@ describe 'sssd::config' do
         end
 
         it { is_expected.to compile }
+
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d/example.conf')
-            .with_ensure('file')
-            .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
-            .with_notify('Class[Sssd::Service]')
-            .with_content(%r{^\[sssd\]$})
-            .with_content(%r{^domains=c, a, b$})
-            .with_content(%r{^services=pam, nss$})
-            .with_content(%r{^\[pam\]$})
+          is_expected.to contain_file('/etc/sssd/conf.d/example.conf').
+            with_ensure('file').
+            with_owner('root').
+            with_group('root').
+            with_mode('0600').
+            with_notify('Class[Sssd::Service]').
+            with_content(%r{^\[sssd\]$}).
+            with_content(%r{^domains=c, a, b$}).
+            with_content(%r{^services=pam, nss$}).
+            with_content(%r{^\[pam\]$})
         }
       end
 
@@ -132,7 +135,7 @@ describe 'sssd::config' do
               {
                 'sssd' =>
                   {
-                    'domains' => ['c', 'a', 'b'],
+                    'domains' => %w[c a b],
                     'services' => 'pam, nss',
                   },
                 'pam' => {},
@@ -141,16 +144,16 @@ describe 'sssd::config' do
         end
 
         it {
-          is_expected.to contain_file('/tmp/thing.conf')
-            .with_ensure('file')
-            .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
-            .with_notify('Class[Sssd::Service]')
-            .with_content(%r{^\[sssd\]$})
-            .with_content(%r{^domains=c, a, b$})
-            .with_content(%r{^services=pam, nss$})
-            .with_content(%r{^\[pam\]$})
+          is_expected.to contain_file('/tmp/thing.conf').
+            with_ensure('file').
+            with_owner('root').
+            with_group('root').
+            with_mode('0600').
+            with_notify('Class[Sssd::Service]').
+            with_content(%r{^\[sssd\]$}).
+            with_content(%r{^domains=c, a, b$}).
+            with_content(%r{^services=pam, nss$}).
+            with_content(%r{^\[pam\]$})
         }
       end
     end
