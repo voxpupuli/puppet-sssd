@@ -1,5 +1,14 @@
 # sssd
 
+[![Build Status](https://github.com/voxpupuli/puppet-sssd/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-sssd/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-sssd/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-sssd/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/sssd.svg)](https://forge.puppetlabs.com/puppet/sssd)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/sssd.svg)](https://forge.puppetlabs.com/puppet/sssd)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/sssd.svg)](https://forge.puppetlabs.com/puppet/sssd)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/sssd.svg)](https://forge.puppetlabs.com/puppet/sssd)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-sssd)
+[![Apache-2 License](https://img.shields.io/github/license/voxpupuli/puppet-sssd.svg)](LICENSE)
+
 Why this SSSD module, when there are so many others on the forge?
 
 This is a minimalist SSSD module that supports incrementally building the config (via `/etc/sssd/conf.d`) or setting it all at once.
