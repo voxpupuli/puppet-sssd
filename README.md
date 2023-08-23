@@ -151,7 +151,7 @@ setting=value, a
 ```ini
 #/etc/sssd/conf.d/example.conf
 [sssd]
-setting:value, b
+setting=value, b
 ```
 
 ```ini
