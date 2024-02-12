@@ -164,7 +164,7 @@ debug=0
 
 This module specifically does not manipulate files or services
 that do not belong to sssd.  There are other modules on the forge
-that can configure pam/authselect and oddjob/`login.defs`.
+that can configure `pam`/`authselect` and `oddjob`/`login.defs`.
 
 If you want to manipulate the sssd startup units, I'd recommend the
 `systemd::dropin` features from [puppet-systemd](https://forge.puppet.com/modules/puppet/systemd)
