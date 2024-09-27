@@ -29,24 +29,25 @@
 # @example
 #   sssd::config { 'main conf':
 #     stanzas             => {
-#       'sssd'            => {
-#         'domains'       => [ 'example.com', 'otherdomain.tld']
-#         'services       => ['pam', 'nss', 'sudo']
-#         'debug'         => 0
+#       'sssd'        => {
+#         'domains'  => ['example.com', 'otherdomain.tld'],
+#         'services' => ['pam', 'nss', 'sudo'],
+#         'debug'    => 0,
 #       },
-#       'example.com'     => {
-#         'id_provider'   => 'ldap'
-#       }
-#     }
-#     force_this_filename => '/etc/sssd/sssd.conf'
+#       'example.com' => {
+#         'id_provider'   => 'ldap',
+#       },
+#     },
+#     force_this_filename => '/etc/sssd/sssd.conf',
 #   }
 #
-#  sssd:config {'LDAP':
-#    stanzas              => {
-#      'domain/LDAP'      => 
-#         'id_provider'   => 'ldap'
-#      }
-#    }
+#   sssd::config { 'LDAP':
+#     stanzas => {
+#       'domain/LDAP'   => {
+#         'id_provider' => 'ldap',
+#       },
+#     },
+#   }
 define sssd::config (
   Hash $stanzas,
   String $owner = 'root',
