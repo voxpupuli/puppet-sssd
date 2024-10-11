@@ -9,12 +9,10 @@
 
 [sssd]
 <% $stanzas['sssd'].keys.sort.each | $key | { -%>
-<% if $stanzas['sssd'][$key] != undef { -%>
 <% if $stanzas['sssd'][$key] =~ Array { -%>
 <%= $key %>=<%= $stanzas['sssd'][$key].join(', ') %>
-<% } else {-%>
+<% } elsif $stanzas['sssd'][$key] != undef {-%>
 <%= $key %>=<%= $stanzas['sssd'][$key] %>
-<% } -%>
 <% } -%>
 <% } -%>
 <% } -%>
@@ -24,12 +22,10 @@
 
 [<%= $section %>]
 <% $stanzas[$section].keys.sort.each | $key | { -%>
-<% if $stanzas[$section][$key] != undef { -%>
 <% if $stanzas[$section][$key] =~ Array { -%>
 <%= $key %>=<%= $stanzas[$section][$key].join(', ') %>
-<% } else {-%>
+<% } elsif $stanzas[$section][$key] != undef {-%>
 <%= $key %>=<%= $stanzas[$section][$key] %>
-<% } -%>
 <% } -%>
 <% } -%>
 <% } -%>
