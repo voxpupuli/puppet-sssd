@@ -48,25 +48,28 @@ class sssd::base_config (
   assert_private()
 
   if $config_manage {
+
+    include sssd::os_checks
+
     file { $main_config_dir:
       ensure => 'directory',
       owner  => $config_owner,
       group  => $config_group,
-      mode   => $config_mode,
+      mode   => $::sssd::os_checks::ignore_file_permissions ? { true => undef, default => $config_mode },
     }
 
     file { $main_pki_dir:
       ensure => 'directory',
       owner  => $pki_owner,
       group  => $pki_group,
-      mode   => $pki_mode,
+      mode   => $::sssd::os_checks::ignore_file_permissions ? { true => undef, default => $pki_mode },
     }
 
     file { $config_d_location:
       ensure  => 'directory',
       owner   => $config_owner,
       group   => $config_group,
-      mode    => $config_mode,
+      mode    => $::sssd::os_checks::ignore_file_permissions ? { true => undef, default => $config_mode },
       recurse => $purge_unmanaged_conf_d,
       purge   => $purge_unmanaged_conf_d,
     }
