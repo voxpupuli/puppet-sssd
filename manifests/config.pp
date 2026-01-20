@@ -62,6 +62,8 @@ define sssd::config (
     fail('You must include the sssd base class before using any defined resources')
   }
 
+  include sssd::os_checks
+
   if $force_this_filename != undef {
     $full_path = $force_this_filename
   } else {
@@ -79,7 +81,7 @@ define sssd::config (
     ensure  => 'file',
     owner   => $owner,
     group   => $group,
-    mode    => $mode,
+    mode    => $::sssd::os_checks::ignore_file_permissions ? { true => undef, default => $mode },
     content => epp('sssd/etc/sssd/sssd.conf.epp', { 'stanzas' => $stanzas }),
     notify  => Class['Sssd::Service'],
   }
