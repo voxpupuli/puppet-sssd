@@ -160,6 +160,26 @@ setting=value, b
 debug=0
 ```
 
+### Version 2.10.0 and newer
+
+Newer versions of sssd runs as user sssd instead of root. The module currently assumes that the service is running as root. The changes below will allow it to run as the sssd user.
+
+```yaml
+sssd::pki_group: sssd
+sssd::pki_mode: '0751'
+sssd::advanced_permissions: true
+```
+
+The following parameters can be used to tweak owner and group ownership and file mode for directories and files:
+```
+sssd::config_dir_owner
+sssd::config_dir_group
+sssd::config_dir_mode
+sssd::main_config_owner
+sssd::main_config_group
+sssd::main_config_mode
+```
+
 ## Limitations
 
 This module specifically does not manipulate files or services

@@ -73,6 +73,13 @@ The following parameters are available in the `sssd` class:
 * [`services_ensure`](#-sssd--services_ensure)
 * [`services_enable`](#-sssd--services_enable)
 * [`service_names`](#-sssd--service_names)
+* [`advanced_permissions`](#-sssd--advanced_permissions)
+* [`config_dir_owner`](#-sssd--config_dir_owner)
+* [`config_dir_group`](#-sssd--config_dir_group)
+* [`config_dir_mode`](#-sssd--config_dir_mode)
+* [`main_config_owner`](#-sssd--main_config_owner)
+* [`main_config_group`](#-sssd--main_config_group)
+* [`main_config_mode`](#-sssd--main_config_mode)
 
 ##### <a name="-sssd--packages_manage"></a>`packages_manage`
 
@@ -204,6 +211,48 @@ Service enable parameter
 Data type: `Array[String]`
 
 Array of services that are part of sssd
+
+##### <a name="-sssd--advanced_permissions"></a>`advanced_permissions`
+
+Data type: `Boolean`
+
+Enable permission handling for files/directories
+
+##### <a name="-sssd--config_dir_owner"></a>`config_dir_owner`
+
+Data type: `String`
+
+Owner for configuration directories ($main_config_dir and $config_d_location)
+
+##### <a name="-sssd--config_dir_group"></a>`config_dir_group`
+
+Data type: `String`
+
+Group for configuration directories ($main_config_dir and $config_d_location)
+
+##### <a name="-sssd--config_dir_mode"></a>`config_dir_mode`
+
+Data type: `Stdlib::Filemode`
+
+chmod for configuration directories ($main_config_dir and $config_d_location)
+
+##### <a name="-sssd--main_config_owner"></a>`main_config_owner`
+
+Data type: `String`
+
+Owner for configuration files ($main_config_file and resoures created by $configs)
+
+##### <a name="-sssd--main_config_group"></a>`main_config_group`
+
+Data type: `String`
+
+Group for configuration files ($main_config_file and resoures created by $configs)
+
+##### <a name="-sssd--main_config_mode"></a>`main_config_mode`
+
+Data type: `Stdlib::Filemode`
+
+chmod for configuration files ($main_config_file and resoures created by $configs)
 
 ## Defined types
 

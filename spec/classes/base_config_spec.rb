@@ -171,6 +171,50 @@ describe 'sssd::base_config' do
             with_stanzas({ 'nss' => { 'debug' => 0 } })
         }
       end
+
+      describe 'with advanced permissions' do
+        let(:params) do
+          {
+            'advanced_permissions' => true,
+            'configs' =>
+              {
+                'pam' =>
+                  {
+                    'stanzas' => { 'sssd' => { 'services' => ['pam'] } }
+                  },
+              }
+          }
+        end
+
+        it {
+          is_expected.to contain_file('/etc/sssd').
+            with_owner('root').
+            with_group('sssd').
+            with_mode('0750')
+        }
+
+        it {
+          is_expected.to contain_file('/etc/sssd/conf.d').
+            with_owner('root').
+            with_group('sssd').
+            with_mode('0750')
+        }
+
+        it {
+          is_expected.to contain_file('/etc/sssd/sssd.conf').
+            with_owner('root').
+            with_group('sssd').
+            with_mode('0640')
+        }
+
+        it {
+          is_expected.to contain_sssd__config('pam').
+            with_owner('root').
+            with_group('sssd').
+            with_mode('0640').
+            with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
+        }
+      end
     end
   end
 end
