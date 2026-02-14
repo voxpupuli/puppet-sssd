@@ -49,6 +49,20 @@
 #   Service enable parameter
 # @param service_names
 #   Array of services that are part of sssd
+# @param advanced_permissions
+#   Enable permission handling for files/directories
+# @param config_dir_owner
+#   Owner for configuration directories ($main_config_dir and $config_d_location)
+# @param config_dir_group
+#   Group for configuration directories ($main_config_dir and $config_d_location)
+# @param config_dir_mode
+#   chmod for configuration directories ($main_config_dir and $config_d_location)
+# @param main_config_owner
+#   Owner for configuration files ($main_config_file and resoures created by $configs)
+# @param main_config_group
+#   Group for configuration files ($main_config_file and resoures created by $configs)
+# @param main_config_mode
+#   chmod for configuration files ($main_config_file and resoures created by $configs)
 #
 # @example
 #   class { 'sssd':
@@ -89,6 +103,13 @@ class sssd (
   Enum['stopped','running'] $services_ensure,
   Boolean $services_enable,
   Array[String] $service_names,
+  Boolean $advanced_permissions,
+  String $config_dir_owner,
+  String $config_dir_group,
+  Stdlib::Filemode $config_dir_mode,
+  String $main_config_owner,
+  String $main_config_group,
+  Stdlib::Filemode $main_config_mode,
 ) {
   contain sssd::install
   contain sssd::base_config

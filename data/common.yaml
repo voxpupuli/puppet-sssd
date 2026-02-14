@@ -19,6 +19,13 @@ sssd::config_mode: '0600'
 sssd::main_config:
   sssd: {}
 sssd::configs: {}
+sssd::advanced_permissions: false
+sssd::config_dir_owner: root
+sssd::config_dir_group: sssd
+sssd::config_dir_mode: '0750'
+sssd::main_config_owner: root
+sssd::main_config_group: sssd
+sssd::main_config_mode: '0640'
 
 sssd::services_manage: true
 sssd::services_ensure: running
