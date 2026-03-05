@@ -18,6 +18,10 @@
 #   Group for the config files - should be 'root'
 # @param config_mode
 #   chmod for the config files - should be '0600'
+# @param config_dir_mode
+#   chmod for main config directory - should probably be '0750' or '0700'
+# @param config_d_mode
+#   chmod for conf.d sub-directory - should probably be '0750', '0711' or '0700'
 # @param main_config
 #   Hash containing the content of $main_config_file broken out by section
 #   Entries in $config_d_location can replace these elements in a last
@@ -41,6 +45,8 @@ class sssd::base_config (
   $config_owner = $sssd::config_owner,
   $config_group = $sssd::config_group,
   $config_mode = $sssd::config_mode,
+  $config_dir_mode = $sssd::config_dir_mode,
+  $config_d_mode = $sssd::config_d_mode,
   $main_config = $sssd::main_config,
   $configs = $sssd::configs,
   # lint:endignore
@@ -48,39 +54,53 @@ class sssd::base_config (
   assert_private()
 
   if $config_manage {
+
+    # Use computed default values for file permissions depending on running OS
+    include sssd::os_defaults
+    $permission_defaults = $sssd::os_defaults::permission_defaults
+    $eff_pki_owner       = $pki_owner       ? { undef => $permission_defaults['pki_owner'],       default => $pki_owner }
+    $eff_pki_group       = $pki_group       ? { undef => $permission_defaults['pki_group'],       default => $pki_group }
+    $eff_pki_mode        = $pki_mode        ? { undef => $permission_defaults['pki_mode'],        default => $pki_mode }
+    $eff_config_owner    = $config_owner    ? { undef => $permission_defaults['config_owner'],    default => $config_owner }
+    $eff_config_group    = $config_group    ? { undef => $permission_defaults['config_group'],    default => $config_group }
+    $eff_config_mode     = $config_mode     ? { undef => $permission_defaults['config_mode'],     default => $config_mode }
+    $eff_config_dir_mode = $config_dir_mode ? { undef => $permission_defaults['config_dir_mode'], default => $config_dir_mode }
+    $eff_config_d_mode   = $config_d_mode   ? { undef => $permission_defaults['config_d_mode'],   default => $config_d_mode }
+    #fail("eff_pki_group=${eff_pki_group} permission_defaults_pki_group=${permission_defaults['pki_group']} pki_group=${pki_group}")
+
     file { $main_config_dir:
       ensure => 'directory',
-      owner  => $config_owner,
-      group  => $config_group,
-      mode   => $config_mode,
+      owner  => $eff_config_owner,
+      group  => $eff_config_group,
+      mode   => $eff_config_dir_mode,
     }
 
     file { $main_pki_dir:
       ensure => 'directory',
-      owner  => $pki_owner,
-      group  => $pki_group,
-      mode   => $pki_mode,
+      owner  => $eff_pki_owner,
+      group  => $eff_pki_group,
+      mode   => $eff_pki_mode,
     }
 
     file { $config_d_location:
       ensure  => 'directory',
-      owner   => $config_owner,
-      group   => $config_group,
-      mode    => $config_mode,
+      owner   => $eff_config_owner,
+      group   => $eff_config_group,
+      mode    => $eff_config_d_mode,
       recurse => $purge_unmanaged_conf_d,
       purge   => $purge_unmanaged_conf_d,
     }
 
     sssd::config { $main_config_file:
-      owner               => $config_owner,
-      group               => $config_group,
-      mode                => $config_mode,
+      owner               => $eff_config_owner,
+      group               => $eff_config_group,
+      mode                => $eff_config_mode,
       stanzas             => $main_config,
       force_this_filename => $main_config_file,
     }
 
     # lint:ignore:140chars
-    create_resources(sssd::config, $configs, { 'owner' => $config_owner, 'group' => $config_group, 'mode' => $config_mode })
+    create_resources(sssd::config, $configs, { 'owner' => $eff_config_owner, 'group' => $eff_config_group, 'mode' => $eff_config_mode })
     # lint:endignore
   }
 }

@@ -22,16 +22,28 @@
 #   Should we remove any files unknown to puppet in the conf_d location?
 # @param pki_owner
 #   Owner for the pki directory - should probably be 'root' or 'sssd'
+#   Leave undef for auto-detect for running OS
 # @param pki_group
 #   Group for the pki directory - should probably be 'root' or 'sssd'
+#   Leave undef for auto-detect for running OS
 # @param pki_mode
-#   Group for the pki directory - should probably be '0711'
+#   Permissions for the pki directory - should probably be '0711'
+#   Leave undef for auto-detect for running OS
 # @param config_owner
 #   Owner for the config files - should probably be 'root' or 'sssd'
+#   Leave undef for auto-detect for running OS
 # @param config_group
 #   Group for the config files - should probably be 'root' or 'sssd'
+#   Leave undef for auto-detect for running OS
 # @param config_mode
-#   chmod for the config files - should be '0600'
+#   Permissions for the config files - should be '0600'
+#   Leave undef for auto-detect for running OS
+# @param config_dir_mode
+#   Permissions for main config directory - should probably be '0750' or '0700'
+#   Leave undef for auto-detect for running OS
+# @param config_d_mode
+#   Permissions for conf.d sub-directory - should probably be '0750', '0711' or '0700'
+#   Leave undef for auto-detect for running OS
 # @param main_config
 #   Hash containing the content of $main_config_file broken out by section
 #   Entries in $config_d_location can replace these elements in a last
@@ -76,12 +88,14 @@ class sssd (
   Stdlib::Absolutepath $main_config_file,
   Stdlib::Absolutepath $config_d_location,
   Stdlib::Absolutepath $main_pki_dir,
-  String $pki_owner,
-  String $pki_group,
-  String $pki_mode,
-  String $config_owner,
-  String $config_group,
-  String $config_mode,
+  Optional[String] $pki_owner = undef,
+  Optional[String] $pki_group = undef,
+  Optional[String] $pki_mode = undef,
+  Optional[String] $config_owner = undef,
+  Optional[String] $config_group = undef,
+  Optional[String] $config_mode = undef,
+  Optional[String] $config_dir_mode = undef,
+  Optional[String] $config_d_mode = undef,
   Boolean $purge_unmanaged_conf_d,
   Hash $main_config,
   Hash $configs,
