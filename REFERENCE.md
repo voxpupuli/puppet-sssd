@@ -87,11 +87,15 @@ Data type: `Boolean`
 
 Should we manage the package?
 
+Default value: `true`
+
 ##### <a name="-sssd--packages_ensure"></a>`packages_ensure`
 
 Data type: `String[1]`
 
 `package` ensure parameter
+
+Default value: `'installed'`
 
 ##### <a name="-sssd--package_names"></a>`package_names`
 
@@ -99,11 +103,15 @@ Data type: `Array[String]`
 
 Array of packages to manage
 
+Default value: `['sssd']`
+
 ##### <a name="-sssd--config_manage"></a>`config_manage`
 
 Data type: `Boolean`
 
 Should we manage the config?
+
+Default value: `true`
 
 ##### <a name="-sssd--main_pki_dir"></a>`main_pki_dir`
 
@@ -111,11 +119,15 @@ Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/pki on your system
 
+Default value: `'/etc/sssd/pki'`
+
 ##### <a name="-sssd--main_config_dir"></a>`main_config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd on your system
+
+Default value: `'/etc/sssd'`
 
 ##### <a name="-sssd--main_config_file"></a>`main_config_file`
 
@@ -123,11 +135,15 @@ Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/sssd.conf on your system
 
+Default value: `'/etc/sssd/sssd.conf'`
+
 ##### <a name="-sssd--config_d_location"></a>`config_d_location`
 
 Data type: `Stdlib::Absolutepath`
 
 This is probably /etc/sssd/conf.d on your system
+
+Default value: `'/etc/sssd/conf.d'`
 
 ##### <a name="-sssd--purge_unmanaged_conf_d"></a>`purge_unmanaged_conf_d`
 
@@ -135,11 +151,15 @@ Data type: `Boolean`
 
 Should we remove any files unknown to puppet in the conf_d location?
 
+Default value: `true`
+
 ##### <a name="-sssd--pki_owner"></a>`pki_owner`
 
 Data type: `String`
 
 Owner for the pki directory - should probably be 'root' or 'sssd'
+
+Default value: `'root'`
 
 ##### <a name="-sssd--pki_group"></a>`pki_group`
 
@@ -147,11 +167,15 @@ Data type: `String`
 
 Group for the pki directory - should probably be 'root' or 'sssd'
 
+Default value: `'root'`
+
 ##### <a name="-sssd--pki_mode"></a>`pki_mode`
 
 Data type: `String`
 
 Group for the pki directory - should probably be '0711'
+
+Default value: `'0711'`
 
 ##### <a name="-sssd--config_owner"></a>`config_owner`
 
@@ -159,17 +183,23 @@ Data type: `String`
 
 Owner for the config files - should probably be 'root' or 'sssd'
 
+Default value: `'root'`
+
 ##### <a name="-sssd--config_group"></a>`config_group`
 
 Data type: `String`
 
 Group for the config files - should probably be 'root' or 'sssd'
 
+Default value: `'root'`
+
 ##### <a name="-sssd--config_mode"></a>`config_mode`
 
 Data type: `String`
 
 chmod for the config files - should be '0600'
+
+Default value: `'0600'`
 
 ##### <a name="-sssd--main_config"></a>`main_config`
 
@@ -178,6 +208,8 @@ Data type: `Hash`
 Hash containing the content of $main_config_file broken out by section
 Entries in $config_d_location can replace these elements in a last
 file wins methodology.
+
+Default value: `{ 'sssd' => {} }`
 
 ##### <a name="-sssd--configs"></a>`configs`
 
@@ -188,11 +220,15 @@ A Hash similar to $main_config, but with one more level of nesting
   section:
     key: value
 
+Default value: `{}`
+
 ##### <a name="-sssd--services_manage"></a>`services_manage`
 
 Data type: `Boolean`
 
 Should this class manage the service states
+
+Default value: `true`
 
 ##### <a name="-sssd--services_ensure"></a>`services_ensure`
 
@@ -200,11 +236,15 @@ Data type: `Enum['stopped','running']`
 
 Service ensure parameter
 
+Default value: `'running'`
+
 ##### <a name="-sssd--services_enable"></a>`services_enable`
 
 Data type: `Boolean`
 
 Service enable parameter
+
+Default value: `true`
 
 ##### <a name="-sssd--service_names"></a>`service_names`
 
@@ -212,11 +252,15 @@ Data type: `Array[String]`
 
 Array of services that are part of sssd
 
+Default value: `['sssd.service']`
+
 ##### <a name="-sssd--advanced_permissions"></a>`advanced_permissions`
 
 Data type: `Boolean`
 
 Enable permission handling for files/directories
+
+Default value: `false`
 
 ##### <a name="-sssd--config_dir_owner"></a>`config_dir_owner`
 
@@ -224,11 +268,15 @@ Data type: `String`
 
 Owner for configuration directories ($main_config_dir and $config_d_location)
 
+Default value: `'root'`
+
 ##### <a name="-sssd--config_dir_group"></a>`config_dir_group`
 
 Data type: `String`
 
 Group for configuration directories ($main_config_dir and $config_d_location)
+
+Default value: `'sssd'`
 
 ##### <a name="-sssd--config_dir_mode"></a>`config_dir_mode`
 
@@ -236,11 +284,15 @@ Data type: `Stdlib::Filemode`
 
 chmod for configuration directories ($main_config_dir and $config_d_location)
 
+Default value: `'0750'`
+
 ##### <a name="-sssd--main_config_owner"></a>`main_config_owner`
 
 Data type: `String`
 
 Owner for configuration files ($main_config_file and resoures created by $configs)
+
+Default value: `'root'`
 
 ##### <a name="-sssd--main_config_group"></a>`main_config_group`
 
@@ -248,11 +300,15 @@ Data type: `String`
 
 Group for configuration files ($main_config_file and resoures created by $configs)
 
+Default value: `'sssd'`
+
 ##### <a name="-sssd--main_config_mode"></a>`main_config_mode`
 
 Data type: `Stdlib::Filemode`
 
 chmod for configuration files ($main_config_file and resoures created by $configs)
+
+Default value: `'0640'`
 
 ## Defined types
 
