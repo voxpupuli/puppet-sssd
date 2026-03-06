@@ -51,34 +51,34 @@ describe 'sssd::base_config' do
         it { is_expected.to have_sssd__config_resource_count(1) }
 
         it {
-          is_expected.to contain_file('/tmp').
-            with_owner('sssd').
-            with_group('sssd').
-            with_mode('0755')
+          is_expected.to contain_file('/tmp')
+            .with_owner('sssd')
+            .with_group('sssd')
+            .with_mode('0755')
         }
 
         it {
-          is_expected.to contain_file('/tmp/pki').
-            with_owner('pki').
-            with_group('pki').
-            with_mode('0711')
+          is_expected.to contain_file('/tmp/pki')
+            .with_owner('pki')
+            .with_group('pki')
+            .with_mode('0711')
         }
 
         it {
-          is_expected.to contain_file('/tmp/example/').
-            with_owner('sssd').
-            with_group('sssd').
-            with_mode('0755').
-            with_recurse(true).
-            with_purge(true)
+          is_expected.to contain_file('/tmp/example/')
+            .with_owner('sssd')
+            .with_group('sssd')
+            .with_mode('0755')
+            .with_recurse(true)
+            .with_purge(true)
         }
 
         it {
-          is_expected.to contain_sssd__config('/tmp/test.conf').
-            with_owner('sssd').
-            with_group('sssd').
-            with_mode('0755').
-            with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
+          is_expected.to contain_sssd__config('/tmp/test.conf')
+            .with_owner('sssd')
+            .with_group('sssd')
+            .with_mode('0755')
+            .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
       end
 
@@ -95,20 +95,20 @@ describe 'sssd::base_config' do
         it { is_expected.to have_sssd__config_resource_count(1) }
 
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d/').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_recurse(false).
-            with_purge(false)
+          is_expected.to contain_file('/etc/sssd/conf.d/')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_recurse(false)
+            .with_purge(false)
         }
 
         it {
-          is_expected.to contain_sssd__config('/etc/sssd/sssd.conf').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
+          is_expected.to contain_sssd__config('/etc/sssd/sssd.conf')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
       end
 
@@ -120,7 +120,7 @@ describe 'sssd::base_config' do
               {
                 'pam' =>
                   {
-                    'stanzas' => { 'sssd' => { 'services' => ['pam'] } }
+                    'stanzas' => { 'sssd' => { 'services' => ['pam'] } },
                   },
                 'nss' =>
                   {
@@ -129,9 +129,9 @@ describe 'sssd::base_config' do
                   },
                 'enable debug' =>
                   {
-                    'stanzas' => { 'nss' => { 'debug' => 0 } }
-                  }
-              }
+                    'stanzas' => { 'nss' => { 'debug' => 0 } },
+                  },
+              },
           }
         end
 
@@ -139,36 +139,36 @@ describe 'sssd::base_config' do
         it { is_expected.to have_sssd__config_resource_count(4) }
 
         it {
-          is_expected.to contain_sssd__config('/etc/sssd/sssd.conf').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_stanzas({ 'sssd' => { 'domains' => ['example'] } })
+          is_expected.to contain_sssd__config('/etc/sssd/sssd.conf')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_stanzas({ 'sssd' => { 'domains' => ['example'] } })
         }
 
         it {
-          is_expected.to contain_sssd__config('pam').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
+          is_expected.to contain_sssd__config('pam')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
 
         it {
-          is_expected.to contain_sssd__config('nss').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_stanzas({ 'sssd' => { 'services' => 'nss' } }).
-            with_order(30)
+          is_expected.to contain_sssd__config('nss')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_stanzas({ 'sssd' => { 'services' => 'nss' } })
+            .with_order(30)
         }
 
         it {
-          is_expected.to contain_sssd__config('enable debug').
-            with_owner('root').
-            with_group('root').
-            with_mode('0600').
-            with_stanzas({ 'nss' => { 'debug' => 0 } })
+          is_expected.to contain_sssd__config('enable debug')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+            .with_stanzas({ 'nss' => { 'debug' => 0 } })
         }
       end
 
@@ -180,39 +180,39 @@ describe 'sssd::base_config' do
               {
                 'pam' =>
                   {
-                    'stanzas' => { 'sssd' => { 'services' => ['pam'] } }
+                    'stanzas' => { 'sssd' => { 'services' => ['pam'] } },
                   },
-              }
+              },
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/sssd').
-            with_owner('root').
-            with_group('sssd').
-            with_mode('0750')
+          is_expected.to contain_file('/etc/sssd')
+            .with_owner('root')
+            .with_group('sssd')
+            .with_mode('0750')
         }
 
         it {
-          is_expected.to contain_file('/etc/sssd/conf.d').
-            with_owner('root').
-            with_group('sssd').
-            with_mode('0750')
+          is_expected.to contain_file('/etc/sssd/conf.d')
+            .with_owner('root')
+            .with_group('sssd')
+            .with_mode('0750')
         }
 
         it {
-          is_expected.to contain_file('/etc/sssd/sssd.conf').
-            with_owner('root').
-            with_group('sssd').
-            with_mode('0640')
+          is_expected.to contain_file('/etc/sssd/sssd.conf')
+            .with_owner('root')
+            .with_group('sssd')
+            .with_mode('0640')
         }
 
         it {
-          is_expected.to contain_sssd__config('pam').
-            with_owner('root').
-            with_group('sssd').
-            with_mode('0640').
-            with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
+          is_expected.to contain_sssd__config('pam')
+            .with_owner('root')
+            .with_group('sssd')
+            .with_mode('0640')
+            .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
       end
     end
