@@ -1,0 +1,7 @@
+---
+# Starting with EL10 (sssd >= 2.10), sssd runs as the unprivileged `sssd`
+# user. Match the ownership and modes shipped by the sssd-common package so
+# that the service can read its configuration.
+sssd::pki_group: sssd
+sssd::pki_mode: '0750'
+sssd::advanced_permissions: true

@@ -162,7 +162,11 @@ debug=0
 
 ### Version 2.10.0 and newer
 
-Newer versions of sssd runs as user sssd instead of root. The module currently assumes that the service is running as root. The changes below will allow it to run as the sssd user.
+Newer versions of sssd runs as user sssd instead of root.
+
+On Enterprise Linux 10 (RHEL, CentOS Stream, Rocky, AlmaLinux and Oracle Linux), the module defaults already match the permissions shipped by the `sssd-common` package, so no extra configuration is needed.
+
+On other platforms, the module assumes that the service is running as root. The changes below will allow it to run as the sssd user.
 
 ```yaml
 sssd::pki_group: sssd
