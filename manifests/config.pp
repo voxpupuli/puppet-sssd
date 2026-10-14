@@ -11,11 +11,14 @@
 #   A hash of stanzas with key/value pairs
 #   of their entries
 # @param owner
-#   Who should own
+#   Who should own. Defaults to `sssd::main_config_owner` when
+#   `sssd::advanced_permissions` is enabled, `sssd::config_owner` otherwise.
 # @param group
-#   Who should own
+#   Who should own. Defaults to `sssd::main_config_group` when
+#   `sssd::advanced_permissions` is enabled, `sssd::config_group` otherwise.
 # @param mode
-#   permissions
+#   permissions. Defaults to `sssd::main_config_mode` when
+#   `sssd::advanced_permissions` is enabled, `sssd::config_mode` otherwise.
 # @param order
 #   prefix used to get these files in the order you want
 # @param config_d_location
@@ -50,9 +53,9 @@
 #   }
 define sssd::config (
   Hash $stanzas,
-  String $owner = 'root',
-  String $group = 'root',
-  String $mode  = '0600',
+  Optional[String] $owner = undef,
+  Optional[String] $group = undef,
+  Optional[String] $mode  = undef,
   Integer[0, 99] $order = 50,
   Optional[Pattern[/\.conf$/]] $filename = undef,
   Stdlib::Absolutepath $config_d_location = '/etc/sssd/conf.d',
@@ -60,6 +63,16 @@ define sssd::config (
 ) {
   if ! defined(Class['sssd']) {
     fail('You must include the sssd base class before using any defined resources')
+  }
+
+  if $sssd::advanced_permissions {
+    $_owner = pick($owner, $sssd::main_config_owner)
+    $_group = pick($group, $sssd::main_config_group)
+    $_mode  = pick($mode, $sssd::main_config_mode)
+  } else {
+    $_owner = pick($owner, $sssd::config_owner)
+    $_group = pick($group, $sssd::config_group)
+    $_mode  = pick($mode, $sssd::config_mode)
   }
 
   if $force_this_filename != undef {
@@ -77,9 +90,9 @@ define sssd::config (
 
   file { $full_path:
     ensure  => 'file',
-    owner   => $owner,
-    group   => $group,
-    mode    => $mode,
+    owner   => $_owner,
+    group   => $_group,
+    mode    => $_mode,
     content => epp('sssd/etc/sssd/sssd.conf.epp', { 'stanzas' => $stanzas }),
     notify  => Class['Sssd::Service'],
   }
