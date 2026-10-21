@@ -3,6 +3,23 @@
 require 'spec_helper'
 
 describe 'sssd::base_config' do
+  # Starting with EL10, sssd runs as the unprivileged sssd user
+  def runs_as_sssd?
+    facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'] == '10'
+  end
+
+  def expected_group
+    runs_as_sssd? ? 'sssd' : 'root'
+  end
+
+  def expected_dir_mode
+    runs_as_sssd? ? '0750' : '0600'
+  end
+
+  def expected_file_mode
+    runs_as_sssd? ? '0640' : '0600'
+  end
+
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
@@ -13,6 +30,27 @@ describe 'sssd::base_config' do
         it { is_expected.to contain_file('/etc/sssd/pki') }
         it { is_expected.to contain_file('/etc/sssd/conf.d') }
         it { is_expected.to contain_sssd__config('/etc/sssd/sssd.conf') }
+
+        it {
+          is_expected.to contain_file('/etc/sssd')
+            .with_owner('root')
+            .with_group(expected_group)
+            .with_mode(expected_dir_mode)
+        }
+
+        it {
+          is_expected.to contain_file('/etc/sssd/pki')
+            .with_owner('root')
+            .with_group(expected_group)
+            .with_mode(runs_as_sssd? ? '0750' : '0711')
+        }
+
+        it {
+          is_expected.to contain_file('/etc/sssd/sssd.conf')
+            .with_owner('root')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
+        }
       end
 
       describe 'without managed config' do
@@ -43,6 +81,7 @@ describe 'sssd::base_config' do
             'config_group' => 'sssd',
             'config_mode' => '0755',
             'main_config' => { 'sssd' => { 'services' => ['pam'] } },
+            'advanced_permissions' => false,
           }
         end
 
@@ -97,8 +136,8 @@ describe 'sssd::base_config' do
         it {
           is_expected.to contain_file('/etc/sssd/conf.d/')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_dir_mode)
             .with_recurse(false)
             .with_purge(false)
         }
@@ -106,8 +145,8 @@ describe 'sssd::base_config' do
         it {
           is_expected.to contain_sssd__config('/etc/sssd/sssd.conf')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
             .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
       end
@@ -141,24 +180,24 @@ describe 'sssd::base_config' do
         it {
           is_expected.to contain_sssd__config('/etc/sssd/sssd.conf')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
             .with_stanzas({ 'sssd' => { 'domains' => ['example'] } })
         }
 
         it {
           is_expected.to contain_sssd__config('pam')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
             .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
 
         it {
           is_expected.to contain_sssd__config('nss')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
             .with_stanzas({ 'sssd' => { 'services' => 'nss' } })
             .with_order(30)
         }
@@ -166,8 +205,8 @@ describe 'sssd::base_config' do
         it {
           is_expected.to contain_sssd__config('enable debug')
             .with_owner('root')
-            .with_group('root')
-            .with_mode('0600')
+            .with_group(expected_group)
+            .with_mode(expected_file_mode)
             .with_stanzas({ 'nss' => { 'debug' => 0 } })
         }
       end

@@ -28,7 +28,7 @@ A description of what this class does
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'sssd':
@@ -323,7 +323,7 @@ set things in a number of useful ways.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 sssd::config { 'main conf':
@@ -425,4 +425,3 @@ Data type: `Optional[Stdlib::Absolutepath]`
 Ignore the helper logic, write out this file
 
 Default value: `undef`
-
