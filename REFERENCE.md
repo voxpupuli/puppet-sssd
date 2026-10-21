@@ -371,27 +371,30 @@ of their entries
 
 ##### <a name="-sssd--config--owner"></a>`owner`
 
-Data type: `String`
+Data type: `Optional[String]`
 
-Who should own
+Who should own. Defaults to `sssd::main_config_owner` when
+`sssd::advanced_permissions` is enabled, `sssd::config_owner` otherwise.
 
-Default value: `'root'`
+Default value: `undef`
 
 ##### <a name="-sssd--config--group"></a>`group`
 
-Data type: `String`
+Data type: `Optional[String]`
 
-Who should own
+Who should own. Defaults to `sssd::main_config_group` when
+`sssd::advanced_permissions` is enabled, `sssd::config_group` otherwise.
 
-Default value: `'root'`
+Default value: `undef`
 
 ##### <a name="-sssd--config--mode"></a>`mode`
 
-Data type: `String`
+Data type: `Optional[String]`
 
-permissions
+permissions. Defaults to `sssd::main_config_mode` when
+`sssd::advanced_permissions` is enabled, `sssd::config_mode` otherwise.
 
-Default value: `'0600'`
+Default value: `undef`
 
 ##### <a name="-sssd--config--order"></a>`order`
 
