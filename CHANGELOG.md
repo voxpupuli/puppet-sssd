@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.0.0](https://github.com/voxpupuli/puppet-sssd/tree/v2.0.0) (2026-09-30)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-sssd/compare/v1.0.0...v2.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#31](https://github.com/voxpupuli/puppet-sssd/pull/31) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- Add support for Debian 12 [\#33](https://github.com/voxpupuli/puppet-sssd/pull/33) ([smortex](https://github.com/smortex))
+- puppetlabs/stdlib: set upper bound to \< 10 [\#30](https://github.com/voxpupuli/puppet-sssd/pull/30) ([TheMeier](https://github.com/TheMeier))
+- metadata.json: Add OpenVox [\#26](https://github.com/voxpupuli/puppet-sssd/pull/26) ([jstraw](https://github.com/jstraw))
+- Remove redundant conditional in sssd.conf.epp [\#22](https://github.com/voxpupuli/puppet-sssd/pull/22) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- Depend on puppetlabs/stdlib [\#17](https://github.com/voxpupuli/puppet-sssd/pull/17) ([quartsize](https://github.com/quartsize))
+
+**Closed issues:**
+
+- mode and ownership of sssd config files/dirs needs improvement [\#24](https://github.com/voxpupuli/puppet-sssd/issues/24)
+- Don't show diffs by default [\#21](https://github.com/voxpupuli/puppet-sssd/issues/21)
+
+**Merged pull requests:**
+
+- Allow more specific file permissions [\#39](https://github.com/voxpupuli/puppet-sssd/pull/39) ([anders-larsson](https://github.com/anders-larsson))
+- fix: typos in example docs [\#20](https://github.com/voxpupuli/puppet-sssd/pull/20) ([TheMeier](https://github.com/TheMeier))
+- Better indication of what specific programs to look at [\#11](https://github.com/voxpupuli/puppet-sssd/pull/11) ([jcpunk](https://github.com/jcpunk))
+- Remove legacy top-scope syntax [\#8](https://github.com/voxpupuli/puppet-sssd/pull/8) ([smortex](https://github.com/smortex))
+- Fix minor documentation typo [\#7](https://github.com/voxpupuli/puppet-sssd/pull/7) ([jcpunk](https://github.com/jcpunk))
+
 ## [v1.0.0](https://github.com/voxpupuli/puppet-sssd/tree/v1.0.0) (2023-08-21)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sssd/compare/0.1.2...v1.0.0)
