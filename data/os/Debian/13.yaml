@@ -1,0 +1,8 @@
+---
+# Debian 13 (sssd >= 2.10) runs sssd as root, but sssd.service resets
+# /etc/sssd to root:root and adds group read at every start. Match that so
+# the service and Puppet do not keep changing each other's permissions.
+sssd::pki_mode: '0750'
+sssd::advanced_permissions: true
+sssd::config_dir_group: root
+sssd::main_config_group: root

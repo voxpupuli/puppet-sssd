@@ -13,20 +13,26 @@ describe 'sssd::base_config' do
       facts[:os]['release']['major'] == '26.04'
   end
 
+  # Debian 13's sssd.service resets /etc/sssd to root:root and adds group read at every start
+  def debian13?
+    facts[:os]['name'] == 'Debian' &&
+      facts[:os]['release']['major'] == '13'
+  end
+
   def expected_group
     (rhel10? || ubuntu26?) ? 'sssd' : 'root'
   end
 
   def expected_dir_mode
-    (rhel10? || ubuntu26?) ? '0750' : '0600'
+    (rhel10? || ubuntu26? || debian13?) ? '0750' : '0600'
   end
 
   def expected_file_mode
-    (rhel10? || ubuntu26?) ? '0640' : '0600'
+    (rhel10? || ubuntu26? || debian13?) ? '0640' : '0600'
   end
 
   def expected_pki_mode
-    if rhel10?
+    if rhel10? || debian13?
       '0750'
     elsif ubuntu26?
       '0751'
@@ -240,31 +246,33 @@ describe 'sssd::base_config' do
           }
         end
 
+        let(:advanced_group) { debian13? ? 'root' : 'sssd' }
+
         it {
           is_expected.to contain_file('/etc/sssd')
             .with_owner('root')
-            .with_group('sssd')
+            .with_group(advanced_group)
             .with_mode('0750')
         }
 
         it {
           is_expected.to contain_file('/etc/sssd/conf.d')
             .with_owner('root')
-            .with_group('sssd')
+            .with_group(advanced_group)
             .with_mode('0750')
         }
 
         it {
           is_expected.to contain_file('/etc/sssd/sssd.conf')
             .with_owner('root')
-            .with_group('sssd')
+            .with_group(advanced_group)
             .with_mode('0640')
         }
 
         it {
           is_expected.to contain_sssd__config('pam')
             .with_owner('root')
-            .with_group('sssd')
+            .with_group(advanced_group)
             .with_mode('0640')
             .with_stanzas({ 'sssd' => { 'services' => ['pam'] } })
         }
