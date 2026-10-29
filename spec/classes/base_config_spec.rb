@@ -3,21 +3,36 @@
 require 'spec_helper'
 
 describe 'sssd::base_config' do
-  # Starting with EL10, sssd runs as the unprivileged sssd user
-  def runs_as_sssd?
-    facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'] == '10'
+  def rhel10?
+    facts[:os]['family'] == 'RedHat' &&
+      facts[:os]['release']['major'] == '10'
+  end
+
+  def ubuntu26?
+    facts[:os]['name'] == 'Ubuntu' &&
+      facts[:os]['release']['major'] == '26.04'
   end
 
   def expected_group
-    runs_as_sssd? ? 'sssd' : 'root'
+    (rhel10? || ubuntu26?) ? 'sssd' : 'root'
   end
 
   def expected_dir_mode
-    runs_as_sssd? ? '0750' : '0600'
+    (rhel10? || ubuntu26?) ? '0750' : '0600'
   end
 
   def expected_file_mode
-    runs_as_sssd? ? '0640' : '0600'
+    (rhel10? || ubuntu26?) ? '0640' : '0600'
+  end
+
+  def expected_pki_mode
+    if rhel10?
+      '0750'
+    elsif ubuntu26?
+      '0751'
+    else
+      '0711'
+    end
   end
 
   on_supported_os.each do |os, os_facts|
@@ -42,7 +57,7 @@ describe 'sssd::base_config' do
           is_expected.to contain_file('/etc/sssd/pki')
             .with_owner('root')
             .with_group(expected_group)
-            .with_mode(runs_as_sssd? ? '0750' : '0711')
+            .with_mode(expected_pki_mode)
         }
 
         it {
