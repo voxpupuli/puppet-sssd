@@ -174,6 +174,8 @@ sssd::pki_mode: '0751'
 sssd::advanced_permissions: true
 ```
 
+When `sssd::advanced_permissions` is enabled, `sssd::config` resources default to the `main_config_*` ownership and mode.
+
 The following parameters can be used to tweak owner and group ownership and file mode for directories and files:
 ```
 sssd::config_dir_owner

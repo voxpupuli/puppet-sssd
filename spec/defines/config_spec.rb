@@ -156,6 +156,26 @@ describe 'sssd::config' do
             .with_content(%r{^\[pam\]$})
         }
       end
+
+      context 'with advanced permissions' do
+        let(:pre_condition) do
+          [
+            "class { 'sssd': advanced_permissions => true }",
+          ]
+        end
+        let(:params) do
+          {
+            'stanzas' => { 'pam' => {} },
+          }
+        end
+
+        it {
+          is_expected.to contain_file('/etc/sssd/conf.d/50-pam.conf')
+            .with_owner('root')
+            .with_group('sssd')
+            .with_mode('0640')
+        }
+      end
     end
   end
 end
