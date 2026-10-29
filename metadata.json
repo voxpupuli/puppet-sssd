@@ -1,6 +1,6 @@
 {
   "name": "puppet-sssd",
-  "version": "1.0.1-rc0",
+  "version": "2.0.0",
   "author": "Vox Pupuli",
   "summary": "Manage sssd at once or incrementally",
   "license": "Apache-2.0",
