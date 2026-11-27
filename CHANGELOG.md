@@ -4,16 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.0.0](https://github.com/voxpupuli/puppet-sssd/tree/v2.0.0) (2026-09-30)
+## [v2.0.0](https://github.com/voxpupuli/puppet-sssd/tree/v2.0.0) (2026-11-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sssd/compare/v1.0.0...v2.0.0)
 
 **Breaking changes:**
 
+- Drop EOL Debian 11, Ubuntu 20.04, Fedora 35 [\#56](https://github.com/voxpupuli/puppet-sssd/pull/56) ([bwitt](https://github.com/bwitt))
+- Match Debian 13 default permissions on `/etc/sssd` [\#51](https://github.com/voxpupuli/puppet-sssd/pull/51) ([bwitt](https://github.com/bwitt))
 - Drop puppet, update openvox minimum version to 8.19 [\#31](https://github.com/voxpupuli/puppet-sssd/pull/31) ([TheMeier](https://github.com/TheMeier))
 
 **Implemented enhancements:**
 
+- Add Support for Ubuntu 26.04 [\#50](https://github.com/voxpupuli/puppet-sssd/pull/50) ([cgrycki](https://github.com/cgrycki))
+- Add support for RHEL 10 [\#48](https://github.com/voxpupuli/puppet-sssd/pull/48) ([bigon](https://github.com/bigon))
+- Update requirements to allow OpenVox 9 [\#47](https://github.com/voxpupuli/puppet-sssd/pull/47) ([sebastianrakel](https://github.com/sebastianrakel))
+- Permit stdlib 10 [\#45](https://github.com/voxpupuli/puppet-sssd/pull/45) ([jcpunk](https://github.com/jcpunk))
+- Allow more specific file permissions [\#39](https://github.com/voxpupuli/puppet-sssd/pull/39) ([anders-larsson](https://github.com/anders-larsson))
 - Add support for Debian 12 [\#33](https://github.com/voxpupuli/puppet-sssd/pull/33) ([smortex](https://github.com/smortex))
 - puppetlabs/stdlib: set upper bound to \< 10 [\#30](https://github.com/voxpupuli/puppet-sssd/pull/30) ([TheMeier](https://github.com/TheMeier))
 - metadata.json: Add OpenVox [\#26](https://github.com/voxpupuli/puppet-sssd/pull/26) ([jstraw](https://github.com/jstraw))
@@ -21,6 +28,7 @@ These should not affect the functionality of the module.
 
 **Fixed bugs:**
 
+- Make sssd::config permissions default to the sssd class settings [\#49](https://github.com/voxpupuli/puppet-sssd/pull/49) ([bigon](https://github.com/bigon))
 - Depend on puppetlabs/stdlib [\#17](https://github.com/voxpupuli/puppet-sssd/pull/17) ([quartsize](https://github.com/quartsize))
 
 **Closed issues:**
@@ -30,10 +38,8 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Allow more specific file permissions [\#39](https://github.com/voxpupuli/puppet-sssd/pull/39) ([anders-larsson](https://github.com/anders-larsson))
 - fix: typos in example docs [\#20](https://github.com/voxpupuli/puppet-sssd/pull/20) ([TheMeier](https://github.com/TheMeier))
 - Better indication of what specific programs to look at [\#11](https://github.com/voxpupuli/puppet-sssd/pull/11) ([jcpunk](https://github.com/jcpunk))
-- Remove legacy top-scope syntax [\#8](https://github.com/voxpupuli/puppet-sssd/pull/8) ([smortex](https://github.com/smortex))
 - Fix minor documentation typo [\#7](https://github.com/voxpupuli/puppet-sssd/pull/7) ([jcpunk](https://github.com/jcpunk))
 
 ## [v1.0.0](https://github.com/voxpupuli/puppet-sssd/tree/v1.0.0) (2023-08-21)
