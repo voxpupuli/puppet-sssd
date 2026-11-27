@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 describe 'sssd::config' do
+  # Module data enables advanced permissions on some releases
   let(:pre_condition) do
     [
-      'include sssd',
+      "class { 'sssd': advanced_permissions => false }",
     ]
   end
 
@@ -160,7 +161,7 @@ describe 'sssd::config' do
       context 'with advanced permissions' do
         let(:pre_condition) do
           [
-            "class { 'sssd': advanced_permissions => true }",
+            "class { 'sssd': advanced_permissions => true, main_config_group => 'sssd' }",
           ]
         end
         let(:params) do
