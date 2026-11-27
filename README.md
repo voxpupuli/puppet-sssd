@@ -166,6 +166,8 @@ Newer versions of sssd runs as user sssd instead of root.
 
 On Enterprise Linux 10 (RHEL, CentOS Stream, Rocky, AlmaLinux and Oracle Linux), the module defaults already match the permissions shipped by the `sssd-common` package, so no extra configuration is needed.
 
+On Debian 13, sssd still runs as root, but `sssd.service` resets `/etc/sssd` to `root:root` and adds group read at every start. The module defaults match those permissions so Puppet does not keep reverting them.
+
 On other platforms, the module assumes that the service is running as root. The changes below will allow it to run as the sssd user.
 
 ```yaml
